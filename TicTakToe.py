@@ -12,7 +12,7 @@ def checkwinner():
     for combo in winning_combinations:
         if buttons[combo[0]]["text"] == buttons[combo[1]]["text"] == buttons[combo[2]]["text"] != " ":
             winner = buttons[combo[0]]["text"]
-            messagebox.showinfo("Game Over", f"Player {1 if winner == 'X' else 2} Wins!!")
+            messagebox.showinfo("Game Over", f"Player {1 if winner == 'X' else 2} Wins!")
             root.quit()
 
 # Player turn tracking
@@ -26,10 +26,10 @@ def buttonpressed(bn):
 
     if bc[bn - 1] == 0:
         if player == 1:
-            button.config(text="X", background="yellow")  # Set "X" with light yellow background
+            button.config(text="X", background="#FF5A79", foreground="white", font=('Arial', 40, 'bold'))  # Light pink for X
             player = 2
         else:
-            button.config(text="O", background="light green")  # Set "O" with light green background
+            button.config(text="O", background="#B22234", foreground="white", font=('Arial', 40, 'bold'))  # Dark red for O
             player = 1
         bc[bn - 1] = 1
         checkwinner()
@@ -37,19 +37,22 @@ def buttonpressed(bn):
 # Initialize GUI
 root = Tk()
 root.title("Tic-Tac-Toe")
+root.geometry("500x500")
+root.configure(bg="white")  # Set background color
 
 # Configure the grid to expand dynamically
 for i in range(3):
-    root.rowconfigure(i, weight=2)
-    root.columnconfigure(i, weight=2)
+    root.rowconfigure(i, weight=1)
+    root.columnconfigure(i, weight=1)
 
-# Create buttons
+# Create buttons with theme colors
 buttons = []
 for i in range(3):
     for j in range(3):
-        btn = Button(root, text=" ", font=('Arial', 30), width=4, height=2,
+        btn = Button(root, text=" ", font=('Arial', 40, 'bold'), width=5, height=2,
+                     bg="#FFB6C1", activebackground="#FF5A79", relief="flat",
                      command=lambda b=len(buttons) + 1: buttonpressed(b))
-        btn.grid(row=i, column=j, sticky="nsew")  # Expand buttons to fill the grid
+        btn.grid(row=i, column=j, sticky="nsew", padx=5, pady=5)  # Padding for spacing
         buttons.append(btn)
 
 root.mainloop()
